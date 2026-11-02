@@ -50,3 +50,12 @@ cp ./project_status_mock.md ./projects.md
 ```
 
 NOTE: do not commit your projects.md, this is your private information 
+
+## Parser preview
+
+The parser can validate and normalize either accepted source file:
+
+```sh
+python3 parser/parse_projects.py projects.md -o /tmp/projects.json
+python3 -m unittest discover -s parser/tests -v
+```
