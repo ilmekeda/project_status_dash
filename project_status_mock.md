@@ -6,16 +6,19 @@ projects:
     name: Project Alpha
     status: active
     priority: high
+    last_updated: 2026-11-02
 
   - id: beta
     name: Project Beta
     status: active
     priority: medium
+    last_updated: 2026-11-02
 
   - id: gamma
     name: Project Gamma
     status: planning
     priority: low
+    last_updated: 2026-11-02
 ---
 
 # Project Alpha

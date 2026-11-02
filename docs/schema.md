@@ -14,6 +14,7 @@ projects:
     name: Human-readable project name
     status: active
     priority: high
+    last_updated: 2026-11-02
 ```
 
 `projects` is a nonempty list. Every entry requires:
@@ -24,11 +25,14 @@ projects:
 - `status`: the current implementation status, such as `planning`, `active`,
   `paused`, or `complete`.
 - `priority`: the current priority, such as `low`, `medium`, or `high`.
+- `last_updated`: the date when the project's source information was last
+  reviewed or changed, using ISO `YYYY-MM-DD` format.
 
 Optional metadata fields may include `start_date`, `target_date`, and
-`description`. Dates use ISO `YYYY-MM-DD` format. Unknown optional values are
-omitted rather than invented. Computed percentages and progress totals do not
-belong in front matter.
+`description`. Dates use ISO `YYYY-MM-DD` format. `last_updated` is required
+for each project so the dashboard can show the freshness of project data.
+Unknown optional values are omitted rather than invented. Computed percentages
+and progress totals do not belong in front matter.
 
 ## Project and milestone headings
 
