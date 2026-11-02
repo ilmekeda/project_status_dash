@@ -1,0 +1,8 @@
+services:
+  preview:
+    image: nginx:1.27-alpine
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+    restart: "no"

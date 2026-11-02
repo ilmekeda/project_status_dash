@@ -19,3 +19,12 @@ docker compose down
 
 On systems without `open`, visit the URL in a browser manually. The preview is
 published to host loopback only. Phase 1 has no parser or generated JSON yet.
+
+## Create a valid projects.md
+
+Use the mock file to create a copy and then edit as needed:
+```sh
+cp ./project_status_mock.md ./projects.md
+```
+
+NOTE: do not commit your projects.md, this is your private information 
