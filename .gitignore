@@ -10,7 +10,7 @@
 !.env.example
 
 # Current Project Status, this is your private information
-.projects.md
+projects.md
 
 # Editor and operating-system files
 .DS_Store
