@@ -1,0 +1,21 @@
+# Generated dashboard output
+/dist/
+/build/
+/public/data/projects.json
+
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local Docker/runtime artifacts
+*.log
