@@ -6,3 +6,13 @@ services:
     volumes:
       - ./:/usr/share/nginx/html:ro
     restart: "no"
+
+  parser:
+    build:
+      context: ./parser
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace:ro
+      - ./generated:/workspace/generated:rw
+    entrypoint: ["python3", "parser/parse_projects.py"]
+    command: ["projects.md", "-o", "generated/projects.json"]
