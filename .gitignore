@@ -2,7 +2,23 @@
 /dist/
 /build/
 /public/data/projects.json
+/generated/*
+!/generated/.gitkeep
 
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Node/tooling dependencies and local output
+node_modules/
+.cache/
+.parcel-cache/
 
 # Local environment and secrets
 .env

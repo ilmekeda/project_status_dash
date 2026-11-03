@@ -50,3 +50,32 @@ cp ./project_status_mock.md ./projects.md
 ```
 
 NOTE: do not commit your projects.md, this is your private information 
+
+## Parser preview
+
+The parser can validate and normalize either accepted source file:
+
+```sh
+sh scripts/generate_data.sh
+python3 parser/parse_projects.py projects.md -o /tmp/projects.json
+python3 -m unittest discover -s parser/tests -v
+```
+
+The generated file is ignored at `generated/projects.json`. To run the same
+parser inside the development container, build the dependency image once and
+run the bind-mounted parser service:
+
+```sh
+docker compose build parser
+docker compose run --rm parser
+```
+
+The parser service reads the host `projects.md` through the bind mount and
+writes only `generated/projects.json`; source edits do not require another image
+build. The Nginx preview can then serve the generated file at
+`http://127.0.0.1:8080/generated/projects.json`.
+
+The JSON-backed dashboard is available at
+`http://127.0.0.1:8080/manual-preview/index.html`. It loads
+`../generated/projects.json`, keeping the preview independent of external
+services.
