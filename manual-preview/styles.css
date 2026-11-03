@@ -1,0 +1,59 @@
+:root {
+  color-scheme: light;
+  --ink: #172033;
+  --muted: #62708a;
+  --line: #dce3ee;
+  --surface: #ffffff;
+  --accent: #3568d4;
+  --accent-soft: #e7efff;
+  --complete: #237a57;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f7fb; color: var(--ink); line-height: 1.5; }
+.site-header, main, footer { width: min(1100px, calc(100% - 2rem)); margin-inline: auto; }
+.site-header { padding: 3rem 0 2rem; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: .5rem; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -.04em; }
+h2 { margin: 2rem 0 1rem; font-size: 1.4rem; }
+h3 { margin-bottom: .25rem; font-size: 1.25rem; }
+.lede, .project-meta, footer { color: var(--muted); }
+.eyebrow { margin-bottom: .35rem; color: var(--accent); font-size: .75rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.summary, .project-card { background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; box-shadow: 0 8px 24px #1b2b4d0b; }
+.summary { padding: 1.25rem; }
+.summary strong { display: block; font-size: 1.7rem; }
+.summary span, .metric { color: var(--muted); font-size: .9rem; }
+.sort-panel { margin-top: 2rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; }
+.section-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.section-heading h2 { margin-top: 0; margin-bottom: .25rem; }
+.section-heading p, .sort-status { margin: 0; color: var(--muted); font-size: .9rem; }
+.sort-rules { display: grid; gap: .65rem; margin: 1rem 0; }
+.sort-rule { display: flex; flex-wrap: wrap; align-items: end; gap: .65rem; }
+label { display: grid; gap: .2rem; color: var(--muted); font-size: .8rem; font-weight: 650; }
+select, button { min-height: 2.35rem; border: 1px solid var(--line); border-radius: .55rem; background: #fff; color: var(--ink); font: inherit; padding: .4rem .6rem; }
+button { cursor: pointer; font-weight: 700; }
+button:hover, button:focus-visible { border-color: var(--accent); color: var(--accent); }
+.remove-sort { min-width: 2.35rem; color: #a33d4d; }
+.secondary-button { margin-bottom: .75rem; color: var(--accent); }
+.timezone-panel { display: flex; flex-wrap: wrap; align-items: end; gap: .65rem 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.timezone-panel .sort-status { flex-basis: 100%; }
+.project-card { margin: 1rem 0; padding: 1.25rem; }
+.load-error { padding: 1rem; color: #a33d4d; background: #fff1f3; border: 1px solid #efb8c1; border-radius: .75rem; }
+.project-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.metric { white-space: nowrap; background: var(--accent-soft); border-radius: 999px; padding: .35rem .65rem; color: var(--accent); font-weight: 700; }
+.project-meta { font-size: .9rem; }
+.weight-line { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .9rem; }
+.weight-dots { color: var(--accent); letter-spacing: .12em; }
+.anvil-icon { width: 1.65rem; height: 1.4rem; margin-right: .2rem; vertical-align: -.3rem; fill: none; stroke: currentColor; stroke-width: 1.05; stroke-linecap: round; stroke-linejoin: round; color: #7a4b27; }
+.progress { height: .55rem; overflow: hidden; margin: 1rem 0; border-radius: 999px; background: #e8edf5; }
+.progress span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.milestones { display: grid; gap: .55rem; padding: 0; margin: 1rem 0; list-style: none; }
+.milestones li { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .55rem; border-bottom: 1px solid var(--line); }
+.milestones span { color: var(--muted); text-align: right; }
+.milestones .complete { color: var(--complete); font-weight: 650; }
+details { margin-top: 1rem; color: var(--muted); }
+summary { cursor: pointer; color: var(--accent); font-weight: 650; }
+footer { padding: 2rem 0 3rem; font-size: .85rem; }
+@media (max-width: 640px) { .summary-grid { grid-template-columns: 1fr; } .project-heading, .milestones li, .section-heading { display: block; } .metric { display: inline-block; margin-bottom: .75rem; } .milestones span { display: block; margin-top: .15rem; text-align: left; } .sort-rule label { flex: 1 1 12rem; } .remove-sort { align-self: end; } }
