@@ -18,7 +18,8 @@ docker compose down
 ```
 
 On systems without `open`, visit the URL in a browser manually. The preview is
-published to host loopback only. Phase 1 has no parser or generated JSON yet.
+published to host loopback only. The dashboard loads its cards and summary from
+the local generated JSON endpoint described below.
 
 ### Bind-mount acceptance check
 
@@ -75,7 +76,27 @@ writes only `generated/projects.json`; source edits do not require another image
 build. The Nginx preview can then serve the generated file at
 `http://127.0.0.1:8080/generated/projects.json`.
 
+## Build static release assets
+
+After regenerating the JSON, create the router-ready static output with:
+
+```sh
+sh scripts/build_static.sh
+```
+
+This writes ignored `dist/` assets only: the continuity-baseline HTML, CSS,
+JavaScript, and local `data/projects.json`. The generated page uses the
+relative `data/projects.json` path and has no runtime dependency on Docker,
+Python, Node.js, a backend, a CDN, or external network services.
+
 The JSON-backed dashboard is available at
 `http://127.0.0.1:8080/manual-preview/index.html`. It loads
 `../generated/projects.json`, keeping the preview independent of external
 services.
+
+JSON regeneration is explicit rather than automatic: after editing
+`projects.md`, run `sh scripts/generate_data.sh`, then refresh the preview.
+The running Nginx container does not need to be rebuilt or restarted because
+both the Markdown source and generated directory are bind-mounted from the
+host. The parser service follows the same workflow with
+`docker compose run --rm parser`.

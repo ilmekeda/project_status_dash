@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-projects-url="../generated/projects.json">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project status dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <p class="eyebrow">Project status dashboard</p>
+      <h1>Development portfolio</h1>
+      <p class="lede">A static dashboard generated from the accepted project Markdown source.</p>
+    </header>
+
+    <main>
+      <section class="overview" aria-labelledby="overview-title">
+        <h2 id="overview-title">Portfolio overview</h2>
+        <div id="summary-grid" class="summary-grid" aria-live="polite">
+          <div class="summary"><strong>Loading…</strong><span>📊 dashboard data</span></div>
+        </div>
+      </section>
+
+      <section class="sort-panel" aria-labelledby="sort-title">
+        <div class="section-heading"><div><h2 id="sort-title">🔀 Sort projects</h2><p>Choose multiple keys; earlier rows have priority.</p></div><button id="reset-sort" type="button">↺ Reset</button></div>
+        <div id="sort-rules" class="sort-rules">
+          <div class="sort-rule"><label>Sort 1 <select class="sort-key"><option value="weight" selected>⚖️ Weight (milestones)</option><option value="priority">🚩 Priority</option><option value="last_updated">🕒 Last updated</option><option value="start_date">🚀 Started</option><option value="end_date">🏁 Ended</option><option value="active">🟢 Active</option></select></label><label>Direction <select class="sort-direction"><option value="desc" selected>Highest / newest first</option><option value="asc">Lowest / oldest first</option></select></label><button class="remove-sort" type="button" aria-label="Remove sort 1">×</button></div>
+          <div class="sort-rule"><label>Sort 2 <select class="sort-key"><option value="weight">⚖️ Weight (milestones)</option><option value="priority">🚩 Priority</option><option value="last_updated">🕒 Last updated</option><option value="start_date">🚀 Started</option><option value="end_date">🏁 Ended</option><option value="active" selected>🟢 Active</option></select></label><label>Direction <select class="sort-direction"><option value="desc" selected>Highest / newest first</option><option value="asc">Lowest / oldest first</option></select></label><button class="remove-sort" type="button" aria-label="Remove sort 2">×</button></div>
+        </div>
+        <button id="add-sort" class="secondary-button" type="button">＋ Add another sort</button>
+        <p id="sort-status" class="sort-status" role="status">Sorted by weight, then active.</p>
+        <div class="timezone-panel">
+          <label for="timezone-select">🌍 Display timezone</label>
+          <select id="timezone-select"></select>
+          <p class="sort-status">Currently showing: <strong id="timezone-current">detecting…</strong></p>
+        </div>
+      </section>
+
+      <section id="projects-section" aria-labelledby="projects-title">
+        <h2 id="projects-title">🧩 Projects</h2>
+        <p id="projects-status" role="status">Loading project data…</p>
+      </section>
+    </main>
+    <footer>Static JSON-backed preview · Data: generated/projects.json</footer>
+  </body>
+</html>
