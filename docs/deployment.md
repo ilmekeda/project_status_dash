@@ -1,6 +1,6 @@
 # Local release and server deployment
 
-The deployment command builds a staticfround JSON; it does not run Python, Node.js,
+The deployment command builds static frontend output and JSON; it does not run Python, Node.js,
 Docker, a database, or an application backend.
 
 ## Local validation and build
@@ -24,6 +24,12 @@ static server, set `DASHBOARD_URL` and run:
 ```sh
 DASHBOARD_URL='http://127.0.0.1:8765/' sh scripts/deploy.sh verify-http
 ```
+
+After a live deployment, the same command uses the `DASHBOARD_URL` loaded from
+`.env` and checks every generated static file served by the router. Look for one
+`HTTP hash verified:` line for each file, followed by `HTTP verification
+COMPLETE`. A failed request or mismatch exits nonzero and does not change the
+router.
 
 ## Dry run
 
@@ -99,4 +105,36 @@ old releases, so rollback remains possible by restoring a previously verified
 active link. The human owns the first live run and must verify the server’s
 filesystem, symlink behavior, Nginx reload behavior, credentials, and rollback
 before authorizing it.
+
+## Manual rollback verification
+
+The deployment keeps older release directories and does not delete them. First
+list the releases and record the currently active target; do not guess a path:
+
+```sh
+ssh -i "$SERVER_IDENTITY_FILE" -p "$SERVER_SSH_PORT" \
+  "$SERVER_USER@$SERVER_HOST" \
+  "set -e; readlink '$SERVER_ACTIVE_LINK'; for release in '$SERVER_RELEASE_ROOT'/*; do [ -d \"\$release\" ] || continue; printf '%s\\n' \"\$release\"; done | sort"
+```
+
+The listing uses a shell glob instead of GNU `find` options because 
+BusyBox `find` does not support `-mindepth` or `-maxdepth`.
+
+Choose a previously verified release from that listing. Set
+`ROLLBACK_RELEASE` locally to its exact absolute path, then prepare and verify a
+new symlink before replacing the active one:
+
+```sh
+ROLLBACK_RELEASE='/confirmed/release/root/previous-release'
+ssh -i "$SERVER_IDENTITY_FILE" -p "$SERVER_SSH_PORT" \
+  "$SERVER_USER@$SERVER_HOST" \
+  "set -e; [ -d '$ROLLBACK_RELEASE' ]; [ -f '$ROLLBACK_RELEASE/index.html' ]; rm -f '$SERVER_ACTIVE_LINK.next'; ln -s '$ROLLBACK_RELEASE' '$SERVER_ACTIVE_LINK.next'; mv -fT '$SERVER_ACTIVE_LINK.next' '$SERVER_ACTIVE_LINK'; [ \"\$(readlink '$SERVER_ACTIVE_LINK')\" = '$ROLLBACK_RELEASE' ]"
+```
+
+Then run the standalone `verify-http` command above. Confirm the dashboard is
+served and the output contains hash-verification lines for all files. If the
+rollback is successful, record the old and new symlink targets and the command
+output without recording credentials or private keys. The failed-upload safety
+property is tested separately: an upload that fails before activation must leave
+the existing active symlink unchanged.
 

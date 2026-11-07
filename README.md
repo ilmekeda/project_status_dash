@@ -78,7 +78,7 @@ build. The Nginx preview can then serve the generated file at
 
 ## Build static release assets
 
-After regenerating the JSON, create the router-ready static output with:
+After regenerating the JSON, create the deployment-ready static output with:
 
 ```sh
 sh scripts/build_static.sh
@@ -100,3 +100,28 @@ The running Nginx container does not need to be rebuilt or restarted because
 both the Markdown source and generated directory are bind-mounted from the
 host. The parser service follows the same workflow with
 `docker compose run --rm parser`.
+
+## Release and deployment preparation
+
+Use [`docs/deployment.md`](docs/deployment.md) and the local pipeline before
+any server transfer:
+
+```sh
+sh scripts/deploy.sh validate
+sh scripts/deploy.sh dry-run
+```
+
+To test HTTP content hashes without SSH or activation, point `DASHBOARD_URL`
+at a static server and run `sh scripts/deploy.sh verify-http`.
+
+The dry run is the default-safe deployment mode. A repository-root `.env` is
+loaded automatically for `KEY=value` configuration, while already-exported
+shell variables take precedence. Live deployment requires the explicit
+`deploy` argument, verified server values, an explicit `SERVER_IDENTITY_FILE`,
+and `DEPLOY_APPROVED=YES`. The identity file is passed directly to SSH/SCP and
+must be mounted read-only when the command runs in Docker. Running the script
+with no argument only performs the dry run. The script defaults to
+`SERVER_SCP_MODE=legacy` for embedded servers; set `DEPLOY_DEBUG=1` for
+verbose, local-only SSH/SCP diagnostics. The final HTTP check hashes every
+served static file and compares it with the local build, rather than checking
+only the response status.
